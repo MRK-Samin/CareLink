@@ -627,7 +627,7 @@ function formatFileSize(bytes) {
 
 // ========== CONSOLE MESSAGE ==========
 console.log('%c CareLink HMS ', 'background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 20px; padding: 10px; border-radius: 5px;');
-console.log('%c Developed by CodeCampBD ', 'color: #667eea; font-size: 14px; padding: 5px;');
+console.log('%c Developed by Samin ', 'color: #667eea; font-size: 14px; padding: 5px;');
 
 // ========== EXPORT FUNCTIONS FOR GLOBAL USE ==========
 window.CareLink = {
