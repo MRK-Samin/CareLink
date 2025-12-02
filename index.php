@@ -19,8 +19,15 @@ $portal_type = isset($_GET['portal']) ? $_GET['portal'] : 'admin';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $portal = mysqli_real_escape_string($conn, $_POST['portal_type']);
     $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = sha1($_POST['password']);
     
+    // CRITICAL FIX: Only encrypt password for admin and doctor, NOT for patient
+    if ($portal == 'patient') {
+        $password = mysqli_real_escape_string($conn, $_POST['password']); // Plain text phone number
+    } else {
+        $password = sha1($_POST['password']); // Encrypted password for admin/doctor
+    }
+    
+    // ========== ADMIN LOGIN ==========
     if ($portal == 'admin') {
         $query = "SELECT * FROM his_admin WHERE ad_email = '$username' AND ad_pwd = '$password'";
         $result = mysqli_query($conn, $query);
@@ -36,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = "Invalid admin credentials!";
         }
     } 
+    // ========== DOCTOR LOGIN ==========
     elseif ($portal == 'doctor') {
         $query = "SELECT * FROM his_docs WHERE doc_email = '$username' AND doc_pwd = '$password'";
         $result = mysqli_query($conn, $query);
@@ -53,8 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = "Invalid doctor credentials!";
         }
     }
+    // ========== PATIENT LOGIN ==========
     elseif ($portal == 'patient') {
-        // For patients, use patient number as username
+        // For patients: username = patient number, password = phone number (plain text)
         $query = "SELECT * FROM his_patients WHERE pat_number = '$username' AND pat_phone = '$password'";
         $result = mysqli_query($conn, $query);
         
@@ -67,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: backend/patient/dashboard.php");
             exit();
         } else {
-            $error = "Invalid patient credentials!";
+            $error = "Invalid patient credentials! Check Patient Number and Phone Number.";
         }
     }
 }
@@ -371,20 +380,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     <script>
         function selectPortal(portal) {
-            // Update URL and reload
             window.location.href = '?portal=' + portal;
         }
         
-        // Update login info based on portal
         const portalType = document.getElementById('portal_type').value;
         const loginInfo = document.getElementById('login-info');
         
         if (portalType === 'admin') {
-            loginInfo.innerHTML = '<strong>Admin Access</strong>Username: admin@ccbd.com<br>Password: admin123';
+            loginInfo.innerHTML = '<strong>Admin Access</strong>Email: admin@ccbd.com<br>Password: admin123';
         } else if (portalType === 'doctor') {
-            loginInfo.innerHTML = '<strong>Doctor Access</strong>Use your registered email and password';
+            loginInfo.innerHTML = '<strong>Doctor Access</strong>Email: aletha@mail.com<br>Password: password123';
         } else if (portalType === 'patient') {
-            loginInfo.innerHTML = '<strong>Patient Access</strong>Use your Patient Number and Phone Number';
+            loginInfo.innerHTML = '<strong>Patient Access</strong>Patient #: 3Z14K<br>Phone: 1478885458';
         }
     </script>
 </body>
