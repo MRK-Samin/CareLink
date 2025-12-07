@@ -27,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Invalid administrator credentials!";
     }
 }
+
+// ========== BACKGROUND IMAGE CONFIGURATION ==========
+$background_image = 'admin-bg.jpg'; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,28 +47,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f0c29;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, rgba(15, 12, 41, 0.95), rgba(48, 43, 99, 0.95), rgba(36, 36, 62, 0.95)),
+                        url('assets/images/<?php echo $background_image; ?>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
+        }
+        
+        /* Fallback if no background image */
+        body:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
         }
         
         /* Animated background particles */
         body::before,
         body::after {
             content: '';
-            position: absolute;
+            position: fixed;
             width: 400px;
             height: 400px;
             border-radius: 50%;
             filter: blur(80px);
             opacity: 0.3;
             animation: float 15s infinite ease-in-out;
+            z-index: 0;
         }
         
         body::before {
@@ -94,18 +106,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         
+        /* Back Home Button */
+        .back-home {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-home:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
         .login-container {
             width: 100%;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 30px;
-            padding: 50px 40px;
+            padding: 50px 45px;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
             animation: slideUp 0.8s ease;
             position: relative;
             z-index: 1;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 20px 0;
         }
         
         @keyframes slideUp {
@@ -122,14 +161,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .admin-badge {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 13px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
         
@@ -139,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         .logo i {
-            font-size: 60px;
+            font-size: 70px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -158,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         .logo h1 {
-            font-size: 32px;
+            font-size: 34px;
             color: #1a1a2e;
             margin-bottom: 10px;
             font-weight: 700;
@@ -167,40 +206,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .logo p {
             color: #666;
             font-size: 15px;
+            margin-top: 8px;
         }
         
         .security-note {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
             border-left: 4px solid #667eea;
-            padding: 15px 20px;
+            padding: 16px 20px;
             border-radius: 12px;
             margin-bottom: 30px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
         }
         
         .security-note i {
-            font-size: 24px;
+            font-size: 22px;
             color: #667eea;
+            margin-top: 2px;
         }
         
         .security-note p {
             color: #666;
             font-size: 13px;
             margin: 0;
+            line-height: 1.6;
         }
         
         .error-msg {
             background: linear-gradient(135deg, #fee, #fcc);
             color: #c33;
-            padding: 15px 20px;
+            padding: 16px 20px;
             border-radius: 12px;
             margin-bottom: 25px;
             border-left: 4px solid #c33;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             animation: shake 0.5s ease;
         }
         
@@ -291,6 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 20px;
             border-radius: 12px;
             font-size: 13px;
+            text-align: left;
         }
         
         .demo-credentials strong {
@@ -313,18 +356,83 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 20px;
         }
         
-        @media (max-width: 480px) {
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+            
+            .back-home {
+                top: 15px;
+                left: 15px;
+                font-size: 14px;
+                padding: 10px 18px;
+            }
+            
             .login-container {
-                padding: 40px 25px;
+                padding: 40px 30px;
+                border-radius: 25px;
             }
             
             .logo h1 {
-                font-size: 26px;
+                font-size: 28px;
             }
+            
+            .logo i {
+                font-size: 60px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 35px 25px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .admin-badge {
+                font-size: 11px;
+                padding: 8px 18px;
+            }
+        }
+        
+        /* Ensure scrollability */
+        html {
+            overflow-y: auto;
+            height: 100%;
+        }
+        
+        body {
+            min-height: 100vh;
+            height: auto;
         }
     </style>
 </head>
 <body>
+    <a href="index.php" class="back-home">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+    
     <div class="login-container">
         <div class="logo">
             <span class="admin-badge">
@@ -337,7 +445,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="security-note">
             <i class="fas fa-lock"></i>
-            <p><strong>Secure Access:</strong> This portal is restricted to authorized administrators only. All login attempts are logged.</p>
+            <p><strong>Secure Access:</strong> This portal is restricted to authorized administrators only. All login attempts are logged and monitored for security purposes.</p>
         </div>
         
         <?php if ($error): ?>
@@ -362,7 +470,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group">
                 <label>
                     <i class="fas fa-key"></i>
-                    Secure Password
+                    Password
                 </label>
                 <input type="password" name="password" required 
                        placeholder="Enter your password"
@@ -373,7 +481,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <button type="submit" class="btn-login">
                 <i class="fas fa-sign-in-alt"></i> 
-                Secure Login
+                Login
             </button>
         </form>
         
@@ -394,7 +502,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             btn.disabled = true;
         });
         
-        // Log access attempt (for demonstration)
+        // Console security message
         console.log('%c ADMINISTRATOR ACCESS PORTAL ', 'background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 14px; padding: 10px; border-radius: 5px;');
         console.log('%c This is a secure area. Unauthorized access is prohibited. ', 'color: #c33; font-size: 12px; padding: 5px;');
     </script>
