@@ -12,6 +12,21 @@ if (isset($_SESSION['admin_id'])) {
     header("Location: backend/patient/dashboard.php");
     exit();
 }
+
+// ========== IMAGE CONFIGURATION ==========
+
+$hero_image = 'hero-bg.jpg'; 
+
+$team_images = [
+    'doctor1.jpg',  //  Tanvir 
+    'doctor2.jpg',  //  Nusrat 
+    'doctor3.jpg',  //  Mahmud 
+    'doctor4.jpg',  //  Farhana 
+];
+
+// About section image
+$about_image = 'hospital-building.jpg'; 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,8 +145,8 @@ if (isset($_SESSION['admin_id'])) {
         .hero {
             margin-top: 80px;
             height: 90vh;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23667eea" width="1200" height="800"/><g fill-opacity="0.1"><path fill="%23ffffff" d="M200 400c50-30 100-50 150-40s90 50 140 80 100 50 150 40 90-50 140-80 100-50 150-40 90 50 140 80"/><path fill="%23ffffff" d="M0 500c50-30 100-50 150-40s90 50 140 80 100 50 150 40 90-50 140-80 100-50 150-40 90 50 140 80 100 50 150 40"/></g></svg>');
+            background: linear-gradient(135deg, hsla(197, 76%, 66%, 1.00), rgba(200, 230, 245, 0.9)),
+                        url('assets/images/hero-bg.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -141,6 +156,12 @@ if (isset($_SESSION['admin_id'])) {
             color: white;
             position: relative;
             overflow: hidden;
+        }
+        
+        /* Fallback if no image */
+        .hero:not([style*="background-image"]) {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23667eea" width="1200" height="800"/><g fill-opacity="0.1"><path fill="%23ffffff" d="M200 400c50-30 100-50 150-40s90 50 140 80 100 50 150 40 90-50 140-80 100-50 150-40 90 50 140 80"/><path fill="%23ffffff" d="M0 500c50-30 100-50 150-40s90 50 140 80 100 50 150 40 90-50 140-80 100-50 150-40 90 50 140 80 100 50 150 40"/></g></svg>');
         }
         
         .hero::before {
@@ -383,6 +404,19 @@ if (isset($_SESSION['admin_id'])) {
             justify-content: center;
             font-size: 80px;
             color: white;
+            overflow: hidden;
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-image.no-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .team-info {
@@ -476,6 +510,19 @@ if (isset($_SESSION['admin_id'])) {
             font-size: 120px;
             color: white;
             box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .about-image.no-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         /* Footer */
@@ -598,14 +645,11 @@ if (isset($_SESSION['admin_id'])) {
     </nav>
     
     <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero" id="home" style="background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)), url('assets/images/<?php echo $hero_image; ?>');">
         <div class="hero-content">
             <h1>Excellence in Healthcare Management</h1>
             <p>Transforming healthcare delivery with innovative technology and compassionate care for better patient outcomes</p>
             <div class="hero-buttons">
-                <a href="login.php" class="btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Login to Portal
-                </a>
                 <a href="#services" class="btn-secondary">
                     <i class="fas fa-info-circle"></i> Learn More
                 </a>
@@ -673,67 +717,38 @@ if (isset($_SESSION['admin_id'])) {
         </div>
         <div class="team-slider">
             <div class="team-track">
+                <?php 
+                $team_members = [
+                    ['name' => 'Dr. Tanvir Rahman', 'role' => 'Cardiology Specialist', 'desc' => '10+ years of experience in cardiac care and interventional cardiology', 'color' => '#667eea'],
+                    ['name' => 'Dr. Nusrat Jahan', 'role' => 'Pediatrics Specialist', 'desc' => 'Expert in child healthcare with focus on preventive medicine', 'color' => '#f5576c'],
+                    ['name' => 'Dr. Mahmud Hasan', 'role' => 'Orthopedic Surgeon', 'desc' => 'Specialized in joint replacement and sports medicine', 'color' => '#00f2fe'],
+                    ['name' => 'Dr. Farhana Sultana', 'role' => 'Gynecology Specialist', 'desc' => 'Expert in women\'s health and prenatal care', 'color' => '#38f9d7'],
+                ];
+                
+                // Display twice for seamless loop
+                for ($loop = 0; $loop < 2; $loop++):
+                    foreach ($team_members as $index => $member):
+                        $img_path = "assets/images/team/" . $team_images[$index];
+                        $has_image = file_exists($img_path);
+                ?>
                 <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user-md"></i>
+                    <div class="team-image <?php echo !$has_image ? 'no-image' : ''; ?>" style="background: linear-gradient(135deg, <?php echo $member['color']; ?>, <?php echo $member['color']; ?>99);">
+                        <?php if ($has_image): ?>
+                            <img src="<?php echo $img_path; ?>" alt="<?php echo $member['name']; ?>">
+                        <?php else: ?>
+                            <i class="fas fa-user-md"></i>
+                        <?php endif; ?>
                     </div>
                     <div class="team-info">
-                        <h3>Dr. Tanvir Rahman</h3>
-                        <p class="role">Cardiology Specialist</p>
-                        <p>10+ years of experience in cardiac care and interventional cardiology</p>
+                        <h3><?php echo $member['name']; ?></h3>
+                        <p class="role"><?php echo $member['role']; ?></p>
+                        <p><?php echo $member['desc']; ?></p>
                     </div>
                 </div>
-                <div class="team-card">
-                    <div class="team-image" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <div class="team-info">
-                        <h3>Dr. Nusrat Jahan</h3>
-                        <p class="role">Pediatrics Specialist</p>
-                        <p>Expert in child healthcare with focus on preventive medicine</p>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <div class="team-image" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <div class="team-info">
-                        <h3>Dr. Mahmud Hasan</h3>
-                        <p class="role">Orthopedic Surgeon</p>
-                        <p>Specialized in joint replacement and sports medicine</p>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <div class="team-image" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <div class="team-info">
-                        <h3>Dr. Farhana Sultana</h3>
-                        <p class="role">Gynecology Specialist</p>
-                        <p>Expert in women's health and prenatal care</p>
-                    </div>
-                </div>
-                <!-- Duplicate for seamless loop -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <div class="team-info">
-                        <h3>Dr. Tanvir Rahman</h3>
-                        <p class="role">Cardiology Specialist</p>
-                        <p>10+ years of experience in cardiac care and interventional cardiology</p>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <div class="team-image" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <div class="team-info">
-                        <h3>Dr. Nusrat Jahan</h3>
-                        <p class="role">Pediatrics Specialist</p>
-                        <p>Expert in child healthcare with focus on preventive medicine</p>
-                    </div>
-                </div>
+                <?php 
+                    endforeach;
+                endfor;
+                ?>
             </div>
         </div>
     </section>
@@ -764,8 +779,12 @@ if (isset($_SESSION['admin_id'])) {
                     </div>
                 </div>
             </div>
-            <div class="about-image">
-                <i class="fas fa-hospital"></i>
+            <div class="about-image <?php echo !file_exists('assets/images/' . $about_image) ? 'no-image' : ''; ?>">
+                <?php if (file_exists('assets/images/' . $about_image)): ?>
+                    <img src="assets/images/<?php echo $about_image; ?>" alt="CareLink Hospital">
+                <?php else: ?>
+                    <i class="fas fa-hospital"></i>
+                <?php endif; ?>
             </div>
         </div>
     </section>
