@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2025 at 02:52 AM
+-- Generation Time: Dec 13, 2025 at 02:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -96,20 +96,22 @@ CREATE TABLE `his_docs` (
   `doc_pwd` varchar(200) DEFAULT NULL,
   `doc_dept` varchar(200) DEFAULT NULL,
   `doc_number` varchar(200) DEFAULT NULL,
-  `doc_dpic` varchar(200) DEFAULT NULL
+  `doc_dpic` varchar(200) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `his_docs`
 --
 
-INSERT INTO `his_docs` (`doc_id`, `doc_fname`, `doc_lname`, `doc_email`, `doc_pwd`, `doc_dept`, `doc_number`, `doc_dpic`) VALUES
-(1, 'Dr. Tanvir', 'Rahman', 'tanvir.rahman@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Cardiology', 'DOC001', 'defaultimg.jpg'),
-(2, 'Dr. Nusrat', 'Jahan', 'nusrat.jahan@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Pediatrics', 'DOC002', 'defaultimg.jpg'),
-(3, 'Dr. Mahmud', 'Hasan', 'mahmud.hasan@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Orthopedics', 'DOC003', 'defaultimg.jpg'),
-(4, 'Dr. Farhana', 'Sultana', 'farhana.sultana@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Gynecology', 'DOC004', 'defaultimg.jpg'),
-(5, 'Dr. Rafiqul', 'Islam', 'rafiqul.islam@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Surgery | Theatre', 'DOC005', 'defaultimg.jpg'),
-(6, 'Dr. Ayesha', 'Akter', 'ayesha.akter@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Laboratory', 'DOC006', 'defaultimg.jpg');
+INSERT INTO `his_docs` (`doc_id`, `doc_fname`, `doc_lname`, `doc_email`, `doc_pwd`, `doc_dept`, `doc_number`, `doc_dpic`, `created_at`, `updated_at`) VALUES
+(1, 'Dr. Tanvir', 'Rahman', 'tanvir.rahman@carelink.com.bd', '6d6949480c940dc122915bed8f0878cabd1af191', 'Cardiology', 'DOC001', 'defaultimg.jpg', '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(2, 'Dr. Nusrat', 'Jahan', 'nusrat.jahan@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Pediatrics', 'DOC002', 'defaultimg.jpg', '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(3, 'Dr. Mahmud', 'Hasan', 'mahmud.hasan@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Orthopedics', 'DOC003', 'defaultimg.jpg', '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(4, 'Dr. Farhana', 'Sultana', 'farhana.sultana@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Gynecology', 'DOC004', 'defaultimg.jpg', '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(5, 'Dr. Rafiqul', 'Islam', 'rafiqul.islam@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Surgery | Theatre', 'DOC005', 'defaultimg.jpg', '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(6, 'Dr. Ayesha', 'Akter', 'ayesha.akter@carelink.com.bd', 'dce0b27ba675df41e9cc07af80ec59c475810824', 'Laboratory', 'DOC006', 'defaultimg.jpg', '2025-12-13 10:26:42', '2025-12-13 10:26:42');
 
 -- --------------------------------------------------------
 
@@ -153,7 +155,7 @@ CREATE TABLE `his_laboratory` (
   `lab_pat_tests` longtext DEFAULT NULL,
   `lab_pat_results` longtext DEFAULT NULL,
   `lab_number` varchar(200) DEFAULT NULL,
-  `lab_date_rec` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `lab_date_rec` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
@@ -209,22 +211,24 @@ CREATE TABLE `his_patients` (
   `pat_type` varchar(200) DEFAULT NULL,
   `pat_date_joined` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
   `pat_ailment` varchar(200) DEFAULT NULL,
-  `pat_discharge_status` varchar(200) DEFAULT NULL
+  `pat_discharge_status` varchar(200) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `his_patients`
 --
 
-INSERT INTO `his_patients` (`pat_id`, `pat_fname`, `pat_lname`, `pat_dob`, `pat_age`, `pat_number`, `pat_addr`, `pat_phone`, `pat_type`, `pat_date_joined`, `pat_ailment`, `pat_discharge_status`) VALUES
-(1, 'Kamal', 'Uddin', '15/03/1985', '39', 'PAT001', 'House 45, Road 12, Dhanmondi, Dhaka-1209', '01712345678', 'OutPatient', '2025-12-02 01:48:13.593098', 'Hypertension', NULL),
-(2, 'Fatema', 'Begum', '22/07/1992', '32', 'PAT002', 'Village: Rampur, Upazila: Savar, Dhaka', '01823456789', 'InPatient', '2025-12-02 01:48:13.593098', 'Dengue Fever', NULL),
-(3, 'Abdul', 'Karim', '10/11/1978', '46', 'PAT003', 'Flat 3B, Uttara Sector 7, Dhaka-1230', '01934567890', 'OutPatient', '2025-12-02 01:48:13.593098', 'Diabetes Mellitus Type 2', NULL),
-(4, 'Shamima', 'Akter', '05/05/2000', '24', 'PAT004', 'House 12, Mohammadpur, Dhaka-1207', '01645678901', 'InPatient', '2025-12-02 01:48:13.593098', 'Pregnancy - 8 months', NULL),
-(5, 'Rahim', 'Mia', '18/09/1995', '29', 'PAT005', 'Mirpur-10, Dhaka-1216', '01756789012', 'OutPatient', '2025-12-02 01:48:13.593098', 'Respiratory Infection', NULL),
-(6, 'Nasrin', 'Sultana', '30/12/1988', '36', 'PAT006', 'Banani, Dhaka-1213', '01867890123', 'InPatient', '2025-12-02 01:48:13.593098', 'Appendicitis', NULL),
-(7, 'Habibur', 'Rahman', '14/02/2010', '14', 'PAT007', 'Chittagong, Bangladesh', '01978901234', 'OutPatient', '2025-12-02 01:48:13.593098', 'Asthma', NULL),
-(8, 'Roksana', 'Khatun', '25/08/1982', '42', 'PAT008', 'Sylhet, Bangladesh', '01589012345', 'InPatient', '2025-12-02 01:48:13.593098', 'Kidney Stone', NULL);
+INSERT INTO `his_patients` (`pat_id`, `pat_fname`, `pat_lname`, `pat_dob`, `pat_age`, `pat_number`, `pat_addr`, `pat_phone`, `pat_type`, `pat_date_joined`, `pat_ailment`, `pat_discharge_status`, `created_at`, `updated_at`) VALUES
+(1, 'Kamal', 'Uddin', '15/03/1985', '39', 'PAT001', 'House 45, Road 12, Dhanmondi, Dhaka-1209', '01712345678', 'OutPatient', '2025-12-02 01:48:13.593098', 'Hypertension', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(2, 'Fatema', 'Begum', '22/07/1992', '32', 'PAT002', 'Village: Rampur, Upazila: Savar, Dhaka', '01823456789', 'InPatient', '2025-12-02 01:48:13.593098', 'Dengue Fever', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(3, 'Abdul', 'Karim', '10/11/1978', '46', 'PAT003', 'Flat 3B, Uttara Sector 7, Dhaka-1230', '01934567890', 'OutPatient', '2025-12-02 01:48:13.593098', 'Diabetes Mellitus Type 2', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(4, 'Shamima', 'Akter', '05/05/2000', '24', 'PAT004', 'House 12, Mohammadpur, Dhaka-1207', '01645678901', 'InPatient', '2025-12-02 01:48:13.593098', 'Pregnancy - 8 months', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(5, 'Rahim', 'Mia', '18/09/1995', '29', 'PAT005', 'Mirpur-10, Dhaka-1216', '01756789012', 'OutPatient', '2025-12-02 01:48:13.593098', 'Respiratory Infection', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(6, 'Nasrin', 'Sultana', '30/12/1988', '36', 'PAT006', 'Banani, Dhaka-1213', '01867890123', 'InPatient', '2025-12-02 01:48:13.593098', 'Appendicitis', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(7, 'Habibur', 'Rahman', '14/02/2010', '14', 'PAT007', 'Chittagong, Bangladesh', '01978901234', 'OutPatient', '2025-12-02 01:48:13.593098', 'Asthma', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42'),
+(8, 'Roksana', 'Khatun', '25/08/1982', '42', 'PAT008', 'Sylhet, Bangladesh', '01589012345', 'InPatient', '2025-12-02 01:48:13.593098', 'Kidney Stone', NULL, '2025-12-13 10:26:42', '2025-12-13 10:26:42');
 
 -- --------------------------------------------------------
 
@@ -471,7 +475,12 @@ ALTER TABLE `his_assets`
 -- Indexes for table `his_docs`
 --
 ALTER TABLE `his_docs`
-  ADD PRIMARY KEY (`doc_id`);
+  ADD PRIMARY KEY (`doc_id`),
+  ADD UNIQUE KEY `unique_doc_number` (`doc_number`),
+  ADD KEY `idx_doctor_fname` (`doc_fname`),
+  ADD KEY `idx_doctor_lname` (`doc_lname`),
+  ADD KEY `idx_doctor_email` (`doc_email`),
+  ADD KEY `idx_doctor_dept` (`doc_dept`);
 
 --
 -- Indexes for table `his_equipments`
@@ -483,19 +492,29 @@ ALTER TABLE `his_equipments`
 -- Indexes for table `his_laboratory`
 --
 ALTER TABLE `his_laboratory`
-  ADD PRIMARY KEY (`lab_id`);
+  ADD PRIMARY KEY (`lab_id`),
+  ADD KEY `fk_lab_patient` (`lab_pat_number`),
+  ADD KEY `idx_lab_number` (`lab_number`),
+  ADD KEY `idx_lab_date` (`lab_date_rec`);
 
 --
 -- Indexes for table `his_medical_records`
 --
 ALTER TABLE `his_medical_records`
-  ADD PRIMARY KEY (`mdr_id`);
+  ADD PRIMARY KEY (`mdr_id`),
+  ADD KEY `fk_medical_patient` (`mdr_pat_number`);
 
 --
 -- Indexes for table `his_patients`
 --
 ALTER TABLE `his_patients`
-  ADD PRIMARY KEY (`pat_id`);
+  ADD PRIMARY KEY (`pat_id`),
+  ADD UNIQUE KEY `pat_number` (`pat_number`),
+  ADD UNIQUE KEY `unique_pat_number` (`pat_number`),
+  ADD KEY `idx_patient_fname` (`pat_fname`),
+  ADD KEY `idx_patient_lname` (`pat_lname`),
+  ADD KEY `idx_patient_phone` (`pat_phone`),
+  ADD KEY `idx_patient_type` (`pat_type`);
 
 --
 -- Indexes for table `his_patient_transfers`
@@ -513,7 +532,10 @@ ALTER TABLE `his_payrolls`
 -- Indexes for table `his_pharmaceuticals`
 --
 ALTER TABLE `his_pharmaceuticals`
-  ADD PRIMARY KEY (`phar_id`);
+  ADD PRIMARY KEY (`phar_id`),
+  ADD KEY `idx_pharma_name` (`phar_name`),
+  ADD KEY `idx_pharma_bcode` (`phar_bcode`),
+  ADD KEY `idx_pharma_category` (`phar_cat`);
 
 --
 -- Indexes for table `his_pharmaceuticals_categories`
@@ -525,7 +547,10 @@ ALTER TABLE `his_pharmaceuticals_categories`
 -- Indexes for table `his_prescriptions`
 --
 ALTER TABLE `his_prescriptions`
-  ADD PRIMARY KEY (`pres_id`);
+  ADD PRIMARY KEY (`pres_id`),
+  ADD KEY `fk_prescription_patient` (`pres_pat_number`),
+  ADD KEY `idx_pres_number` (`pres_number`),
+  ADD KEY `idx_pres_date` (`pres_date`);
 
 --
 -- Indexes for table `his_pwdresets`
@@ -537,7 +562,10 @@ ALTER TABLE `his_pwdresets`
 -- Indexes for table `his_surgery`
 --
 ALTER TABLE `his_surgery`
-  ADD PRIMARY KEY (`s_id`);
+  ADD PRIMARY KEY (`s_id`),
+  ADD KEY `fk_surgery_patient` (`s_pat_number`),
+  ADD KEY `idx_surgery_number` (`s_number`),
+  ADD KEY `idx_surgery_date` (`s_pat_date`);
 
 --
 -- Indexes for table `his_vendor`
@@ -549,7 +577,10 @@ ALTER TABLE `his_vendor`
 -- Indexes for table `his_vitals`
 --
 ALTER TABLE `his_vitals`
-  ADD PRIMARY KEY (`vit_id`);
+  ADD PRIMARY KEY (`vit_id`),
+  ADD KEY `idx_vitals_number` (`vit_number`),
+  ADD KEY `idx_vitals_date` (`vit_daterec`),
+  ADD KEY `fk_vitals_patient` (`vit_pat_number`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -656,6 +687,16 @@ ALTER TABLE `his_vendor`
 --
 ALTER TABLE `his_vitals`
   MODIFY `vit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `his_vitals`
+--
+ALTER TABLE `his_vitals`
+  ADD CONSTRAINT `fk_vitals_patient` FOREIGN KEY (`vit_pat_number`) REFERENCES `his_patients` (`pat_number`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
