@@ -468,19 +468,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const portalType = document.getElementById('portal_type').value;
         const loginHelp = document.getElementById('login-help');
         
-        if (portalType === 'doctor') {
-            loginHelp.innerHTML = `
-                <strong><i class="fas fa-info-circle"></i> Demo Credentials</strong>
-                <p><i class="fas fa-envelope"></i> Email: tanvir.rahman@carelink.com.bd</p>
-                <p><i class="fas fa-lock"></i> Password: password</p>
-            `;
-        } else if (portalType === 'patient') {
-            loginHelp.innerHTML = `
-                <strong><i class="fas fa-info-circle"></i> Demo Credentials</strong>
-                <p><i class="fas fa-hashtag"></i> Patient Number: PAT001</p>
-                <p><i class="fas fa-phone"></i> Phone: 01712345678</p>
-            `;
-        }
+        // if (portalType === 'doctor') {
+        //     loginHelp.innerHTML = `
+        //         <strong><i class="fas fa-info-circle"></i> Demo Credentials</strong>
+        //         <p><i class="fas fa-envelope"></i> Email: tanvir.rahman@carelink.com.bd</p>
+        //         <p><i class="fas fa-lock"></i> Password: password</p>
+        //     `;
+        // } else if (portalType === 'patient') {
+        //     loginHelp.innerHTML = `
+        //         <strong><i class="fas fa-info-circle"></i> Demo Credentials</strong>
+        //         <p><i class="fas fa-hashtag"></i> Patient Number: PAT001</p>
+        //         <p><i class="fas fa-phone"></i> Phone: 01712345678</p>
+        //     `;
+        // }
         
         // Add loading animation on submit
         document.getElementById('loginForm').addEventListener('submit', function() {

@@ -485,13 +485,13 @@ $background_image = 'admin-bg.jpg';
             </button>
         </form>
         
-        <div class="login-footer">
+        <!-- <div class="login-footer">
             <div class="demo-credentials">
                 <strong><i class="fas fa-info-circle"></i> Demo Credentials</strong>
                 <p><i class="fas fa-envelope"></i> <strong>Email:</strong> admin@ccbd.com</p>
                 <p><i class="fas fa-key"></i> <strong>Password:</strong> admin123</p>
             </div>
-        </div>
+        </div> -->
     </div>
     
     <script>
